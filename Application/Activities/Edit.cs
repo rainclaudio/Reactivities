@@ -1,5 +1,7 @@
+using Application.Core;
 using AutoMapper;
 using Domain;
+using FluentValidation;
 using MediatR;
 using Persistence;
 
@@ -8,18 +10,21 @@ namespace Application.Activities
 {
     public class Edit
     {
-        public class Command : IRequest
+        public class Command : IRequest <Result<Unit>>
         {
             public Activity Activity { get; set; }
         }
 
-        public class MyCustomResult
+        public class CommandValidator : AbstractValidator<Command>
         {
-            public bool Success { get; set; }
-            public string Message { get; set; }
+            public CommandValidator()
+            {
+                // Business rules for validation
+                RuleFor(x => x.Activity).SetValidator(new ActivityValidator());
+            }
         }
 
-        public class Handler : IRequestHandler<Command>
+        public class Handler : IRequestHandler<Command, Result<Unit>>
         {
             private readonly DataContext _context;
             private readonly IMapper _mapper;
@@ -29,15 +34,23 @@ namespace Application.Activities
                 _mapper = mapper; 
                 _context = context;
             }
-            public async Task Handle(Command request, CancellationToken cancellationToken)
+            public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
-                // This is the activity in our databse
+                // This is the activity in our database
                 var activity = await _context.Activities.FindAsync(request.Activity.Id);
-                
+
+                if (activity == null) return null; 
+
                 // Update all properties of activity with the upcoming Activity of request
                 _mapper.Map(request.Activity, activity);
 
-                 await _context.SaveChangesAsync();
+                // check if number of changes is greater than Zero
+                var result = await _context.SaveChangesAsync() > 0;
+
+                if(!result) return Result<Unit>.Failure("Failed to update activity");
+
+                return Result<Unit>.Success(Unit.Value);
+
             }
         }
     }
