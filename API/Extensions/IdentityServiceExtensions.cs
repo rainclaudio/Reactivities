@@ -1,6 +1,7 @@
 ﻿using API.Services;
 using Domain;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Persistence;
 using System.Text;
@@ -22,7 +23,11 @@ namespace API.Extensions
 
                 You can configure it here
                 */
-                opt.Password.RequireNonAlphanumeric = true;
+                opt.Password.RequireDigit = false;
+                opt.Password.RequiredLength = 5;
+                opt.Password.RequireLowercase = true;
+                opt.Password.RequireUppercase = false;
+                opt.Password.RequireNonAlphanumeric = false;
                 opt.User.RequireUniqueEmail = true;
             })
             .AddEntityFrameworkStores<DataContext>();

@@ -12,6 +12,5 @@ namespace Persistence
 
         // this is gonna represent the Entity in the database
         public DbSet<Activity>  Activities{ get; set; }
-
     }
 }
