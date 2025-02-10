@@ -1,13 +1,13 @@
 import { observer } from "mobx-react-lite";
 import { Segment, Grid, Icon } from "semantic-ui-react";
 import { Activity } from "../../../app/models/activity";
-import {format} from 'date-fns';
+import { format } from "date-fns";
 
 interface Props {
   activity: Activity;
 }
 
-export const ActivityDetailedInfo =  observer(({ activity }: Props) => {
+export const ActivityDetailedInfo = observer(({ activity }: Props) => {
   return (
     <Segment.Group>
       <Segment attached="top">
@@ -26,7 +26,7 @@ export const ActivityDetailedInfo =  observer(({ activity }: Props) => {
             <Icon name="calendar" size="large" color="teal" />
           </Grid.Column>
           <Grid.Column width={15}>
-            <span>{format(activity.date!, 'dd MMM yyyy h:mm aa')}</span>
+            <span>{format(activity.date!, "dd MMM yyyy h:mm aa")}</span>
           </Grid.Column>
         </Grid>
       </Segment>

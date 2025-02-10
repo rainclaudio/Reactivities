@@ -2,7 +2,7 @@ import { observer } from "mobx-react-lite";
 import { Button, Header, Item, Segment, Image } from "semantic-ui-react";
 import { Activity } from "../../../app/models/activity";
 import { Link } from "react-router-dom";
-import {format} from 'date-fns';
+import { format } from "date-fns";
 
 const activityImageStyle = {
   filter: "brightness(30%)",
@@ -21,7 +21,7 @@ interface Props {
   activity: Activity;
 }
 
-export const ActivityDetailedHeader = (observer( ({ activity }: Props) =>  {
+export const ActivityDetailedHeader = observer(({ activity }: Props) => {
   return (
     <Segment.Group>
       <Segment basic attached="top" style={{ padding: "0" }}>
@@ -38,8 +38,8 @@ export const ActivityDetailedHeader = (observer( ({ activity }: Props) =>  {
                   size="huge"
                   content={activity.title}
                   style={{ color: "white" }}
-                  />
-                <p>{format( activity.date!, 'dd MMMM yyyy') }</p>
+                />
+                <p>{format(activity.date!, "dd MMMM yyyy")}</p>
                 <p>
                   Hosted by <strong>Bob</strong>
                 </p>
@@ -51,10 +51,15 @@ export const ActivityDetailedHeader = (observer( ({ activity }: Props) =>  {
       <Segment clearing attached="bottom">
         <Button color="teal">Join Activity</Button>
         <Button>Cancel attendance</Button>
-        <Button as={Link} to={`/manage/${activity.id}`}  color="orange" floated="right">
+        <Button
+          as={Link}
+          to={`/manage/${activity.id}`}
+          color="orange"
+          floated="right"
+        >
           Manage Event
         </Button>
       </Segment>
     </Segment.Group>
   );
-}));
+});

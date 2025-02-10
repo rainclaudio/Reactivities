@@ -1,7 +1,7 @@
 import { observer } from "mobx-react-lite";
 import { Segment, Header, Comment, Form, Button } from "semantic-ui-react";
 
-export const  ActivityDetailedChat = observer(() => {
+export const ActivityDetailedChat = observer(() => {
   return (
     <>
       <Segment

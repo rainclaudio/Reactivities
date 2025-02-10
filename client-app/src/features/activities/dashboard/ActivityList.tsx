@@ -15,11 +15,10 @@ export const ActivityList = observer(() => {
           <Header sub color="teal">
             {group}
           </Header>
-    
-              {activities.map((activity) => (
-                <ActivityListItem key={activity.id} activity={activity} />
-              ))}
 
+          {activities.map((activity) => (
+            <ActivityListItem key={activity.id} activity={activity} />
+          ))}
         </Fragment>
       ))}
     </>
