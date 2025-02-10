@@ -8,7 +8,7 @@ namespace Application.Activities
 {
     public class Create
     {
-        public class Command : IRequest<Result<Unit >>
+        public class Command : IRequest<Result<Unit>>
         {
             public Activity Activity { get; set; }
         }

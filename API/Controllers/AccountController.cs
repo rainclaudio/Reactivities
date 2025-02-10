@@ -9,7 +9,6 @@ using System.Security.Claims;
 
 namespace API.Controllers
 {
-   
     [ApiController]
     [Route("api/[controller]")]
     public class AccountController : ControllerBase
@@ -77,7 +76,6 @@ namespace API.Controllers
             return BadRequest("Problem registering user");
         }
 
-
         [Authorize]
         [HttpGet]
         public async Task<ActionResult<UserDto>> GetCurrentUser()
@@ -98,6 +96,5 @@ namespace API.Controllers
                 Username = user.UserName,
             };
         }
-
     }
 }
