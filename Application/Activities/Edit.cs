@@ -5,12 +5,11 @@ using FluentValidation;
 using MediatR;
 using Persistence;
 
-
 namespace Application.Activities
 {
     public class Edit
     {
-        public class Command : IRequest <Result<Unit>>
+        public class Command : IRequest<Result<Unit>>
         {
             public Activity Activity { get; set; }
         }
@@ -31,7 +30,7 @@ namespace Application.Activities
 
             public Handler(DataContext context, IMapper mapper)
             {
-                _mapper = mapper; 
+                _mapper = mapper;
                 _context = context;
             }
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
@@ -39,7 +38,7 @@ namespace Application.Activities
                 // This is the activity in our database
                 var activity = await _context.Activities.FindAsync(request.Activity.Id);
 
-                if (activity == null) return null; 
+                if (activity == null) return null;
 
                 // Update all properties of activity with the upcoming Activity of request
                 _mapper.Map(request.Activity, activity);
@@ -47,10 +46,9 @@ namespace Application.Activities
                 // check if number of changes is greater than Zero
                 var result = await _context.SaveChangesAsync() > 0;
 
-                if(!result) return Result<Unit>.Failure("Failed to update activity");
+                if (!result) return Result<Unit>.Failure("Failed to update activity");
 
                 return Result<Unit>.Success(Unit.Value);
-
             }
         }
     }

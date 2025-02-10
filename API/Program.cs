@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 
-
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers(opt =>
 {
@@ -23,26 +22,25 @@ app.UseMiddleware<ExceptionMiddleware>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
-{ 
+{
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
 app.UseCors("CorsPolicy");
-
 app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapControllers();
 
 using var scope = app.Services.CreateScope();
 var services = scope.ServiceProvider;
+
 try
 {
     var context = services.GetRequiredService<DataContext>();
     var userManager = services.GetRequiredService<UserManager<AppUser>>();
     await context.Database.MigrateAsync();
-    await Seed.SeedData(context,userManager);
+    await Seed.SeedData(context, userManager);
 }
 catch (Exception ex)
 {

@@ -4,10 +4,8 @@ namespace Domain
 {
     public class AppUser : IdentityUser
     {
-
         public string DisplayName { get; set; }
         // description about themselves
-        public string Bio {  get; set; }
-
+        public string Bio { get; set; }
     }
 }
